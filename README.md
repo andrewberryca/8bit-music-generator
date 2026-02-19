@@ -2,6 +2,8 @@
 
 A browser-based chiptune music generator with a retro sequencer UI. Create, edit, and export chip-style music directly in your browser — no installs, no dependencies, just open `index.html`.
 
+[**Live Demo**](https://andrewberryca.github.io/8bit-music-generator/)
+
 ![8-Bit Music Generator](screenshot.png)
 
 ## Features
