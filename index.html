@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8-Bit Music Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+  <div class="crt-overlay"></div>
+
+  <!-- Top Bar: title + transport + export -->
+  <div class="top-bar">
+    <h1>8-BIT MUSIC</h1>
+    <div class="transport">
+      <button id="btn-play" class="transport-btn">&#9654; PLAY</button>
+      <button id="btn-stop" class="transport-btn">&#9632; STOP</button>
+      <label>BPM</label>
+      <input type="range" id="bpm-slider" min="0" max="240" value="120">
+      <input type="number" id="bpm-input" min="0" max="240" value="120">
+      <button id="btn-loop" class="transport-btn active">LOOP</button>
+      <button id="btn-bitmode" class="transport-btn bit-toggle active">8-BIT</button>
+    </div>
+    <div class="export-group">
+      <label>DUR(s)</label>
+      <input type="number" id="export-duration" min="1" max="1000" value="" placeholder="auto">
+      <button id="btn-export" class="action-btn export-btn">EXPORT WAV</button>
+    </div>
+  </div>
+
+  <!-- Channel Row: tabs + controls -->
+  <div class="channel-row">
+    <div class="channel-tabs">
+      <button class="channel-tab active" data-channel="0">LEAD</button>
+      <button class="channel-tab" data-channel="1">BASS</button>
+      <button class="channel-tab" data-channel="2">ARP</button>
+      <button class="channel-tab" data-channel="3">PERC</button>
+    </div>
+    <div class="channel-controls">
+      <label>WAVE</label>
+      <select id="wave-type">
+        <option value="square">Square</option>
+        <option value="sawtooth">Sawtooth</option>
+        <option value="triangle">Triangle</option>
+        <option value="sine">Sine</option>
+        <option value="noise">Noise</option>
+      </select>
+      <label>VOL</label>
+      <input type="range" id="channel-volume" min="0" max="100" value="80">
+      <span id="volume-display">80</span>
+      <button id="btn-mute">MUTE</button>
+      <button id="btn-solo">SOLO</button>
+    </div>
+  </div>
+
+  <!-- Sequencer Grid (fills remaining space) -->
+  <div class="sequencer-wrapper">
+    <div class="note-labels" id="note-labels"></div>
+    <div class="grid-scroll">
+      <div class="step-numbers" id="step-numbers"></div>
+      <div class="sequencer-grid" id="sequencer-grid"></div>
+      <div class="playhead" id="playhead"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Panel: generator + presets -->
+  <div class="bottom-panel">
+    <div class="preset-row">
+      <span class="panel-label">STYLE</span>
+      <div class="preset-chips" id="preset-chips">
+        <button class="preset-chip active" data-preset="chiptune">CHIPTUNE</button>
+        <button class="preset-chip" data-preset="boss-battle">BOSS BATTLE</button>
+        <button class="preset-chip" data-preset="title-screen">TITLE SCREEN</button>
+        <button class="preset-chip" data-preset="megaman">MEGA MAN</button>
+        <button class="preset-chip" data-preset="castlevania">CASTLEVANIA</button>
+        <button class="preset-chip" data-preset="zelda">ZELDA</button>
+        <button class="preset-chip" data-preset="zelda-dungeon">DUNGEON</button>
+        <button class="preset-chip" data-preset="metroid">METROID</button>
+        <button class="preset-chip" data-preset="kirby">KIRBY</button>
+        <button class="preset-chip" data-preset="tetris">TETRIS</button>
+        <button class="preset-chip" data-preset="sonic">SONIC</button>
+        <button class="preset-chip" data-preset="ff-battle">FF BATTLE</button>
+        <button class="preset-chip" data-preset="ff-town">FF TOWN</button>
+        <button class="preset-chip" data-preset="victory">VICTORY</button>
+        <button class="preset-chip" data-preset="minecraft">MINECRAFT</button>
+        <button class="preset-chip" data-preset="minecraft-calm">MC CALM</button>
+        <button class="preset-chip" data-preset="minecraft-cave">MC CAVE</button>
+        <button class="preset-chip" data-preset="techno">TECHNO</button>
+        <button class="preset-chip" data-preset="jazz">JAZZ</button>
+        <button class="preset-chip" data-preset="rock">ROCK</button>
+        <button class="preset-chip" data-preset="funk">FUNK</button>
+        <button class="preset-chip" data-preset="ambient">AMBIENT</button>
+        <button class="preset-chip" data-preset="horror">HORROR</button>
+        <button class="preset-chip" data-preset="march">MARCH</button>
+        <button class="preset-chip" data-preset="samurai">SAMURAI</button>
+        <button class="preset-chip" data-preset="vampire">VAMPIRE</button>
+        <button class="preset-chip" data-preset="racing">RACING</button>
+        <button class="preset-chip" data-preset="space">SPACE</button>
+        <button class="preset-chip" data-preset="lullaby">LULLABY</button>
+        <button class="preset-chip" data-preset="pirate">PIRATE</button>
+      </div>
+    </div>
+    <div class="generator-row">
+      <label>SCALE</label>
+      <select id="gen-scale">
+        <option value="pentatonic">Pentatonic</option>
+        <option value="minorPent">Minor Pent.</option>
+        <option value="blues">Blues</option>
+        <option value="major">Major</option>
+        <option value="minor">Minor</option>
+        <option value="dorian">Dorian</option>
+        <option value="phrygian">Phrygian</option>
+        <option value="lydian">Lydian</option>
+        <option value="mixolydian">Mixolydian</option>
+        <option value="harmonicMinor">Harm. Minor</option>
+        <option value="hungarian">Hungarian</option>
+        <option value="japanese">Japanese</option>
+        <option value="wholetone">Whole Tone</option>
+        <option value="chromatic">Chromatic</option>
+      </select>
+      <label>ROOT</label>
+      <select id="gen-root">
+        <option value="0">C</option>
+        <option value="1">C#</option>
+        <option value="2">D</option>
+        <option value="3">D#</option>
+        <option value="4">E</option>
+        <option value="5">F</option>
+        <option value="6">F#</option>
+        <option value="7">G</option>
+        <option value="8">G#</option>
+        <option value="9">A</option>
+        <option value="10">A#</option>
+        <option value="11">B</option>
+      </select>
+      <label>DENSITY</label>
+      <input type="range" id="gen-density" min="10" max="100" value="50">
+      <span id="density-display">50</span>
+      <button id="btn-style-gen" class="action-btn style-btn" style="border-color:#00ffff;color:#00ffff">GENERATE</button>
+      <button id="btn-generate" class="action-btn">RANDOMIZE</button>
+      <button id="btn-clear" class="action-btn clear-btn">CLEAR</button>
+    </div>
+  </div>
+
+  <script src="app.js?v=8"></script>
+</body>
+</html>
